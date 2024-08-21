@@ -133,7 +133,7 @@ SELECT
     EXTRACT YEAR (sale_date) as year,
     EXTRACTMONTH ( sale_date) as month,
     AVG(total_sale) as avg_sale,
-    RANK() OVER(PARTITION BY EXTRACT(YEAR FROM sale_date) ORDER BY AVG(total_sale) DESC) as rank
+    RANK() OVER(PARTITION BY EXTRACT YEAR (sale_date) ORDER BY AVG(total_sale) DESC) as rank
 FROM sales_data
 GROUP BY 1, 2
 ) as t1

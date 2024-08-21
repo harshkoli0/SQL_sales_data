@@ -1,99 +1,32 @@
-# SQL_sales_data
-create database sales;
-use sales;
+his project is designed to demonstrate SQL skills and techniques typically used by data analysts to explore, clean, and analyze retail sales data. The project involves setting up a retail sales database, performing exploratory data analysis (EDA), and answering specific business questions through SQL queries. This project is ideal for those who are starting their journey in data analysis and want to build a solid foundation in SQL.
 
-create table sales_data (
-transactions_id int primary key ,
-	sale_date	date ,
-    sale_time	time,
-    customer_id	int,
-    gender	varchar (15),
-    age int,
-	category varchar(20),
-    quantiy	int,
-    price_per_unit float,
-	cogs	float,
-    total_sale float
+Objectives
+Set up a retail sales database: Create and populate a retail sales database with the provided sales data.
+Data Cleaning: Identify and remove any records with missing or null values.
+Exploratory Data Analysis (EDA): Perform basic exploratory data analysis to understand the dataset.
+Business Analysis: Use SQL to answer specific business questions and derive insights from the sales data.
+Project Structure
+1. Database Setup
+Database Creation: The project starts by creating a database named p1_retail_db.
+Table Creation: A table named retail_sales is created to store the sales data. The table structure includes columns for transaction ID, sale date, sale time, customer ID, gender, age, product category, quantity sold, price per unit, cost of goods sold (COGS), and total sale amount.
+CREATE DATABASE p1_retail_db;
+
+CREATE TABLE retail_sales
+(
+    transactions_id INT PRIMARY KEY,
+    sale_date DATE,	
+    sale_time TIME,
+    customer_id INT,	
+    gender VARCHAR(10),
+    age INT,
+    category VARCHAR(35),
+    quantity INT,
+    price_per_unit FLOAT,	
+    cogs FLOAT,
+    total_sale FLOAT
 );
-select  *from  sales_data ;
--- data cleaning 
-
-select * from sales_data where
-transactions_id is null
-or
-	sale_date	is null
-    or
-    sale_time	is null
-    or
-    customer_id	is null
-    or
-    gender	is null
-    or
-	category is null
-    or
-	quantiy is null	
-    or
-    price_per_unit is null
-    or
-	cogs is null
-    or
-	total_sale is null;
-    
--- data exploration
--- how many sales we have?
-select count(*) from sales_data;
-
--- how many unique customer we have?
-
-select count(distinct customer_id) from sales_data;
-
-select distinct (category) from sales_data;
-
--- data analysis problem 
-
--- Q.1 Write a SQL query to retrieve all columns for sales made on '2022-11-05
-select*from sales_data where sale_date = "2022-11-05";
-
--- Q.2 Write a SQL query to retrieve all transactions where the category is 'Clothing' and the quantity sold is more than 10 in the month of Nov-2022
-
-select * from sales_data where category = 'Clothing'  and TO_CHAR (sale_date ,"yyyy-mm") = 2022-11  ;
-
--- Q.3 Write a SQL query to calculate the total sales (total_sale) for each category.
-select category , sum(total_sale) as netsale , count(*) from sales_data group by category ;
-
--- Q.4 Write a SQL query to find the average age of customers who purchased items from the 'Beauty' category.
-select category , round (avg(age),2) from sales_data where category = 'Beauty'  group by category ;
-
--- Q.5 Write a SQL query to find all transactions where the total_sale is greater than 1000.
-
-select * from sales_data where total_sale >1000;
-
--- Q.6 Write a SQL query to find the total number of transactions (transaction_id) made by each gender in each category.
-select category,gender, count(*) from sales_data group by category,gender
-order by category ;
-
--- Q.7 Write a SQL query to calculate the average sale for each month. Find out best selling month in each year
-
-select year(sale_date) as year , month(sale_date) as month , round(avg(total_sale),2) from sales_data group by year,month
-order by  year ;
-
--- Q.8 Write a SQL query to find the top 5 customers based on the highest total sales 
-select customer_id , sum(total_sale) from sales_data  group by       customer_id   order by customer_id desc limit 5 ;
-
--- Q.9 Write a SQL query to find the number of unique customers who purchased items from each category.
-
-select category, count( distinct customer_id) from  sales_data group by category;
-
--- Q.10 Write a SQL query to create each shift and number of orders (Example Morning <=12, Afternoon Between 12 & 17, Evening >17)
-with hourly_sale
-as(
-select*,
-case 
-when hour(sale_time) < 12 then "morning"
-when hour(sale_time) between 12 and 17 then "afternoon"
-else "evening"
-end as shift
-from sales_data
-)
-select shift ,count(*)from  hourly_sale
-group by  shift;
+2. Data Exploration & Cleaning
+Record Count: Determine the total number of records in the dataset.
+Customer Count: Find out how many unique customers are in the dataset.
+Category Count: Identify all unique product categories in the dataset.
+Null Value Check: Check for any null values in the dataset and delete records with missing data.

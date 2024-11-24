@@ -78,7 +78,7 @@ FROM sales_data
 WHERE 
     category = 'Clothing'
     AND 
-    TO_CHAR(sale_date, 'YYYY-MM') = '2022-11'
+    str_to_date(sale_date, 'YYYY-MM') = '2022-11'
     AND
     quantity >= 4
 ```
@@ -103,7 +103,7 @@ WHERE category = 'Beauty'
 
 5. **Write a SQL query to find all transactions where the total_sale is greater than 1000.**:
 ```sql
-SELECT * FROMsales_data
+SELECT * FROM sales_data
 WHERE total_sale > 1000
 ```
 
